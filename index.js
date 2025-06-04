@@ -18,7 +18,7 @@ app.get('/api/soundcloud', async (req, res) => {
   const YELLOW = "\x1b[33m";
 
   // Contoh log warna
-  console.log(`${BLUE}[PROCESSING]${RESET} ${new Date().toISOString()} - ${GREEN}Processing:${RESET} ${YELLOW}${url}${RESET}`);
+  console.log(`${new Date().toISOString()} - ${GREEN}Processing:${RESET} ${YELLOW}${url}${RESET}`);
 
   if (!url) return res.status(400).json({ error: 'Missing SoundCloud URL' });
 
@@ -70,7 +70,7 @@ app.get('/api/soundcloud', async (req, res) => {
       fs.unlinkSync(mp3);
       fs.unlinkSync(jsonFile);
     }
-
+    
     // Kirim respons
     if (responses.length === 0) {
       return res.status(404).json({ error: 'No audio found or failed to process' });
@@ -79,7 +79,7 @@ app.get('/api/soundcloud', async (req, res) => {
     } else {
       return res.json(responses); // playlist
     }
-
+     console.log(`${new Date().toISOString()} - ${GREEN}Successfull:${RESET} ${YELLOW}${url}${RESET}`);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Processing failed', detail: err.toString() });
